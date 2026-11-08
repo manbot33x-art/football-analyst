@@ -1,0 +1,60 @@
+{
+  "manifest_version": "0.4",
+  "name": "football-analyst",
+  "display_name": "Football Analyst – محلل كرة القدم",
+  "version": "1.0.0",
+  "description": "Arabic-first football fixtures, form, goals, corners and shots analysis for Claude.",
+  "long_description": "Connect Claude Desktop to API-Football to list fixtures across covered competitions and analyze form, injuries, head-to-head records, estimated 1X2 and goals probabilities, corners and shots inside the box. Projections are estimates, not guarantees.\n\nRequires an API-Football API key.",
+  "author": {
+    "name": "OpenAI Assistant"
+  },
+  "license": "MIT",
+  "keywords": ["football", "soccer", "fixtures", "scores", "statistics", "analysis", "Arabic", "corners", "goals"],
+  "privacy_policies": ["https://www.api-football.com/privacy"],
+  "server": {
+    "type": "uv",
+    "entry_point": "server.py",
+    "mcp_config": {
+      "env": {
+        "API_FOOTBALL_KEY": "${user_config.api_key}",
+        "FOOTBALL_TIMEZONE": "${user_config.timezone}"
+      }
+    }
+  },
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "API-Football API Key",
+      "description": "Paste your API key from api-football.com. Stored as a sensitive setting by Claude Desktop.",
+      "sensitive": true,
+      "required": true
+    },
+    "timezone": {
+      "type": "string",
+      "title": "Timezone",
+      "description": "Fixture display timezone. Use Africa/Cairo for Egypt.",
+      "default": "Africa/Cairo",
+      "required": true
+    }
+  },
+  "compatibility": {
+    "platforms": ["win32", "darwin", "linux"],
+    "runtimes": {
+      "python": ">=3.10"
+    }
+  },
+  "tools": [
+    {
+      "name": "list_matches",
+      "description": "List football fixtures for a date, with optional competition, country, team and status filters."
+    },
+    {
+      "name": "analyze_match",
+      "description": "Analyze one fixture using recent form, independent Poisson estimates, provider predictions, injuries, head-to-head, corners and shots inside the box."
+    },
+    {
+      "name": "analyze_today_matches",
+      "description": "List today's fixtures and deeply analyze a bounded number of selected matches to control API usage."
+    }
+  ]
+}
