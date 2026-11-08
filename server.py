@@ -573,4 +573,6 @@ async def analyze_today_matches(
 
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.settings.host = "0.0.0.0"
+    mcp.settings.port = int(os.getenv("PORT", "10000"))
+    mcp.run(transport="streamable-http")
